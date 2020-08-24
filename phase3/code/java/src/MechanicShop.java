@@ -325,25 +325,58 @@ public class MechanicShop{
 	}
 	
 	public static void ListCustomersWithBillLessThan100(MechanicShop esql){//6
-		
+		try{
+			String query = "SELECT C.fname, C.lname, CR.date, CR.comment, CR.bill FROM Customer AS C, Closed_Request AS CR, Service_Request AS S WHERE S.customer_id = C.id AND S.rid = CR.rid AND CR.bill < 100";
+			esql.executeQueryAndPrintResult(query);
+		}
+		catch(Exception e){
+			System.out.println("Query 6 failure");
+		}
 	}
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
-		
+		try{
+			String query = "SELECT C.fname, C.lname, COUNT(*) FROM Owns AS O INNER JOIN Customer AS C ON O.customer_id = C.id GROUP BY c.id HAVING COUNT(*) > 20";
+			esql.executeQueryAndPrintResult(query);
+		}
+		catch(Exception e){
+			System.out.println("Query 7 failure");
+		}
 	}
 	
 	public static void ListCarsBefore1995With50000Milles(MechanicShop esql){//8
-		
+		try{
+			String query = "SELECT s.rid, S.customer_id, C.vin, C.make, C.model, C.year, S.odometer FROM Car AS C, Service_Request AS S WHERE C.vin = S.car_vin AND C.year < 1995 AND S.odometer < 50000";
+			esql.executeQueryAndPrintResult(query);
+		}
+		catch(Exception e){
+			System.out.println("Query 8 failure");
+		}
 	}
 	
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
 		//
+		try{
+			System.out.print("How many entries?: ");
+			int k = Integer.parseInt(in.readLine());
+			String query = "SELECT C.make, C.model, C.year, C.vin, A.total_requests FROM Car AS C, (SELECT S.car_vin, COUNT(*) AS total_requests FROM Service_Request AS S GROUP BY S.car_vin) AS A WHERE C.vin = A.car_vin ORDER BY A.total_requests DESC LIMIT " + Integer.toString(k);
+			esql.executeQueryAndPrintResult(query);
+		}
+		catch(Exception e){
+			System.out.println("Query 9 failure");
+		}
 		
 	}
 	
-	public static void ListCustomersInDescendingOrderOfTheirTotalBill(MechanicShop esql){//9
+	public static void ListCustomersInDescendingOrderOfTheirTotalBill(MechanicShop esql){//10
 		//
-		
+		try{
+			String query = "SELECT C.fname, C.lname, A.total_bill FROM Customer AS C, (SELECT B.customer_id, SUM(B.bill) AS total_bill FROM (SELECT S.customer_id, CR.rid, CR.bill FROM Closed_Request AS CR INNER JOIN Service_Request AS S ON s.rid = CR.rid) AS B GROUP BY B.customer_id) AS A WHERE A.customer_id = C.id ORDER BY total_bill DESC";
+			esql.executeQueryAndPrintResult(query);
+		}
+		catch(Exception e){
+			System.out.println("Query 10 failure");
+		}
 	}
 	
 }
