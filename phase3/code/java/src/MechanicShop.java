@@ -599,32 +599,28 @@ public class MechanicShop{
                                 	}
 				}	
 			}
-			else if(check == 0){
-                                if(exist1 > 0 && exist2 > 0){
-                                        System.out.println("Recording Checking...");
-                                        System.out.println("Data does not match! Quit back to menu");
-                                }
-                                else{
-                                        System.out.println("The closed request does not exist! Please create a new closed request");
-                                        String query_Closed_Request = "SELECT wid FROM Closed_Request";
-                                        List<List<String>> Closed_Request_Database = esql.executeQueryAndReturnResult(query_Closed_Request);
-                                        int wid = Closed_Request_Database.size() + 1;
-                                        Scanner input_Closed = new Scanner(System.in);
-                                        System.out.print("Request ID: ");
-                                        int rid = wid;
-					System.out.println(rid);
-                                        System.out.print("Mechanic ID: ");
-                                        int mid = input_Closed.nextInt();
-                                        System.out.print("Closed Date: ");
-                                        String date = in.readLine();
-                                        System.out.print("Service Comment: ");
-                                        String comment = in.readLine();
-                                        System.out.print("Service Bill: $");
-                                        int bill = input_Closed.nextInt();
-                                        String insert = "INSERT INTO Closed_Request VALUES(" + Integer.toString(wid) + ", " + Integer.toString(rid) + ", " + Integer.toString(mid) + ", \'" + date + "\', \'" + comment + "\', " + Integer.toString(bill) + ")";
-                                        esql.executeUpdate(insert);
-                                        System.out.println("New Closed Record Added");
-                                }
+			else if(check == 0){                                
+                                System.out.println("Recording Checking...");
+                                System.out.println("Data does not match!");                             
+                                System.out.println("The closed request does not exist! Please create a new closed request");
+                                String query_Closed_Request = "SELECT wid FROM Closed_Request";
+                                List<List<String>> Closed_Request_Database = esql.executeQueryAndReturnResult(query_Closed_Request);
+                                int wid = Closed_Request_Database.size() + 1;
+                                Scanner input_Closed = new Scanner(System.in);
+                                System.out.print("Request ID: ");
+                                int rid = wid;
+				System.out.println(rid);
+                                System.out.print("Mechanic ID: ");
+                                int mid = input_Closed.nextInt();
+                                System.out.print("Closed Date: ");
+                                String date = in.readLine();
+                                System.out.print("Service Comment: ");
+                                String comment = in.readLine();
+                                System.out.print("Service Bill: $");
+                                int bill = input_Closed.nextInt();
+                                String insert = "INSERT INTO Closed_Request VALUES(" + Integer.toString(wid) + ", " + Integer.toString(rid) + ", " + Integer.toString(mid) + ", \'" + date + "\', \'" + comment + "\', " + Integer.toString(bill) + ")";
+                                esql.executeUpdate(insert);
+                                System.out.println("New Closed Record Added");                                
                         }
 		}
 		catch(Exception E) {
